@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Faktura {
     List<ElementFaktury> list = new ArrayList<>();
-    String klient;
-    public Faktura(String klient)
+    String nazwa,klient;
+    public Faktura(String nazwa, String klient)
     {
+        this.nazwa = nazwa;
         this.klient = klient;
     }
     public void add(String nazwa, int ilosc, int cena)
@@ -18,7 +19,9 @@ public class Faktura {
     public void print()
     {
         System.out.println("<<START FAKTURY>>");
-        System.out.println("Klient:\t"+this.klient);
+        System.out.println("Nazwa:\t"+nazwa);
+        System.out.println("Klient:\t"+klient);
+
         double total = 0;
         for(ElementFaktury e : list) {
             System.out.println(e.getElement());
