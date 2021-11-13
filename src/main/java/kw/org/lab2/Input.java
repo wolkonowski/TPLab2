@@ -2,6 +2,7 @@ package kw.org.lab2;
 
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -14,6 +15,43 @@ public class Input {
     private String klient = "";
     /** Nazwa obecnie wybranej faktury. */
     private String faktura = "";
+    /**
+     * Dodaj do bazy danych danego klienta.
+     * @param nazwa nazwa
+     * @param klientName faktura
+     */
+    private void add(final String nazwa, final Klient klientName) {
+        map.put(nazwa, klientName);
+    }
+
+    /**
+     * Odczytaj z bazy klienta o danej nazwie.
+     * @param nazwa nazwa
+     * @return klient o danej nazwie
+     */
+    private Klient get(final String nazwa) {
+        return map.get(nazwa);
+    }
+
+    /**
+     * Czy w bazie są klienci?
+     * @return Czy w bazie są klienci?
+     *
+     */
+    private boolean isEmpty() {
+        return map.isEmpty();
+    }
+
+    /**
+     * Uzyskaj wszystkich klientów.
+     * @return wszyscy klienci
+     */
+    private Set<Map.Entry<String, Klient>> getAll() {
+        return map.entrySet();
+    }
+
+
+
 
     /**
      * Wyświetl dostępne komendy.
@@ -106,21 +144,21 @@ public class Input {
         if ("".equals(faktura)) {
             return;
         }
-        map.get(klient).add(faktura, args[1], args[2], args[3]);
+        get(klient).add(faktura, args[1], args[2], args[3]);
     }
 
     private void fWyswietl() {
         if ("".equals(faktura)) {
             return;
         }
-        map.get(klient).show(faktura);
+        get(klient).show(faktura);
     }
 
     private void fWybierz(final String nazwa) {
         if ("".equals(klient) || "".equals(nazwa)) {
             return;
         }
-        if (map.get(klient).find(nazwa)) {
+        if (get(klient).find(nazwa)) {
             faktura = nazwa;
         } else {
             faktura = "";
@@ -132,7 +170,7 @@ public class Input {
         if ("".equals(klient) || "".equals(nazwa)) {
             return;
         }
-        if (map.get(klient).create(nazwa)) {
+        if (get(klient).create(nazwa)) {
             faktura = nazwa;
         }
     }
@@ -141,11 +179,11 @@ public class Input {
         if ("".equals(klient)) {
             return;
         }
-        map.get(klient).list();
+        get(klient).list();
     }
 
     private void kWybierz(final String nazwa) {
-        if (map.get(nazwa) == null || "".equals(nazwa)) {
+        if (get(nazwa) == null || "".equals(nazwa)) {
             klient = "";
         } else {
             klient = nazwa;
@@ -154,20 +192,20 @@ public class Input {
     }
 
     private void kNowy(final String nazwa) {
-        if (map.get(nazwa) != null || "".equals(nazwa)) {
+        if (get(nazwa) != null || "".equals(nazwa)) {
             return;
         }
         final Klient nowyKlient = new Klient(nazwa);
-        map.put(nazwa, nowyKlient);
+        add(nazwa, nowyKlient);
         kWybierz(nazwa);
     }
 
     private void kLista() {
-        if (map.isEmpty()) {
+        if (isEmpty()) {
             System.out.println("Nie ma jeszcze klientów");
             return;
         }
-        for (final Map.Entry<String, Klient> e: map.entrySet()) {
+        for (final Map.Entry<String, Klient> e: getAll()) {
             System.out.println(e.getKey());
         }
     }
