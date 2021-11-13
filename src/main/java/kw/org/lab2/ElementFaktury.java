@@ -1,22 +1,45 @@
 package kw.org.lab2;
 
+/**
+ * Klasa reprezentująca pozycję na fakturze.
+ */
 public class ElementFaktury {
+    /** Nazwa produktu. */
+    private final String nazwa;
+    /** Ilość produktów. */
+    private final int ilosc;
+    /** Cena za sztukę produktu. */
+    private final int cena;
 
-    private String nazwa;
-    private int ilosc;
-    private int cena;
-    public ElementFaktury(String nazwa, int ilosc, int cena)
-    {
-        this.nazwa = nazwa;
-        this.ilosc = ilosc;
-        this.cena = cena;
+    /** Tworzy element faktury.
+     *
+     * @param produkt nazwa produktu
+     * @param iloscProduktow ilosc produktów
+     * @param cenaZaSztuke cena w gr za sztukę
+     */
+    public ElementFaktury(final String produkt,
+                          final int iloscProduktow,
+                          final int cenaZaSztuke) {
+        this.nazwa = produkt;
+        this.ilosc = iloscProduktow;
+        this.cena = cenaZaSztuke;
     }
-    public double total()
-    {
-        return (double) (ilosc*cena)/100;
+
+    /**
+     * Podlicz wartość pozycji.
+     * @return wartość pozycji
+     */
+    public double total() {
+        return (double) (ilosc * cena) / 100;
     }
-    public String getElement()
-    {
-        return nazwa+"\t"+ilosc+"szt. * "+(double)cena/100+"zl\tRAZEM "+total()+"zł";
+
+    /**
+     * Wyświelt linię reprezentującą daną pozycję.
+     * @return zwraca reprezentację danej pozycji
+     */
+    public String getElement() {
+        return nazwa + "\t"
+                + ilosc + "szt. * " + (double) cena / 100
+                + "zl\tRAZEM " + total() + "zł";
     }
 }

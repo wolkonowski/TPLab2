@@ -1,142 +1,173 @@
 package kw.org.lab2;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Klasa odpowiedzialna za interfejs użytkownika.
+ */
 public class Input {
-    Map<String, Klient> list = new HashMap<>();
-    String klient="", faktura="";
-    void help()
-    {
-    System.out.println("""
-    exit\tZamyka program
-    help\tWyświetla dostępne polecenia
-    klienci\tWyświetla listę klientów
-    nowyKlient <nazwa>\tTworzy klienta
-    klient <nazwa>\tWybiera klienta
-    faktury\tWyświetla listę faktur
-    nowaFaktura <nazwa>\tTworzy fakturę
-    faktura <nazwa>\tWybiera fakturę
-    wyswietl\tWyświetla obecnie wybraną fakturę
-    dodaj <nazwa> <ilosc> <cena[gr]>\tTworzy nowa pozycję na fakturze"""
-    );
+    /** Mapa zawierająca wszystkich klientów. */
+    private final Map<String, Klient> map = new ConcurrentHashMap<>();
+    /** Nazwa obecnie wybranego klienta. */
+    private String klient = "";
+    /** Nazwa obecnie wybranej faktury. */
+    private String faktura = "";
+
+    /**
+     * Wyświetl dostępne komendy.
+     */
+    private void help() {
+        System.out.println("""
+        exit\t\t\t\t\t\t\t\tZamyka program
+        help\t\t\t\t\t\t\t\tWyświetla dostępne polecenia
+        klienci\t\t\t\t\t\t\t\tWyświetla listę klientów
+        nowyKlient <nazwa>\t\t\t\t\tTworzy klienta
+        klient <nazwa>\t\t\t\t\t\tWybiera klienta
+        faktury\t\t\t\t\t\t\t\tWyświetla listę faktur
+        nowaFaktura <nazwa>\t\t\t\t\tTworzy fakturę
+        faktura <nazwa>\t\t\t\t\t\tWybiera fakturę
+        wyswietl\t\t\t\t\t\t\tWyświetla obecnie wybraną fakturę
+        dodaj <nazwa> <ilosc> <cena[gr]>\tTworzy nowa pozycję na fakturze"""
+        );
     }
-    void start() {
-        Scanner sc = new Scanner(System.in);
+
+    /**
+     * Rozpocznij działanie interfejsu.
+     */
+    public void start() {
+        final Scanner scanner = new Scanner(System.in);
         help();
         while (true) {
-            String k = "Podaj komendę";
-            if(!klient.equals("")) k+="<"+klient+">";
-            if(!faktura.equals("")) k+="<"+faktura+">";
-            System.out.println(k);
-            String s = sc.nextLine();
-            String[] args = s.split(" ");
-            switch (args[0])
-            {
+            String command = "Podaj komendę";
+            if (!("".equals(klient))) {
+                command += "<" + klient + ">";
+            }
+            if (!("".equals(faktura))) {
+                command += "<" + faktura + ">";
+            }
+            System.out.println(command);
+            final String line = scanner.nextLine();
+            final String[] args = line.split(" ");
+            switch (args[0]) {
                 case "exit":
+                    scanner.close();
                     return;
                 case "help":
                     help();
                     break;
                 case "klienci":
-                    K_lista();
+                    kLista();
                     break;
                 case "nowyKlient":
-                    if(args.length<2) break;
-                    K_nowy(args[1]);
+                    if (args.length < 2) {
+                        break;
+                    }
+                    kNowy(args[1]);
                     break;
                 case "klient":
-                    if(args.length<2) break;
-                    K_wybierz(args[1]);
+                    if (args.length < 2) {
+                        break;
+                    }
+                    kWybierz(args[1]);
                     break;
                 case "faktury":
-                    F_lista();
+                    fLista();
                     break;
                 case "nowaFaktura":
-                    if(args.length<2) break;
-                    F_nowa(args[1]);
+                    if (args.length < 2) {
+                        break;
+                    }
+                    fNowa(args[1]);
                     break;
                 case "faktura":
-                    if(args.length<2) break;
-                    F_wybierz(args[1]);
+                    if (args.length < 2) {
+                        break;
+                    }
+                    fWybierz(args[1]);
                     break;
                 case "wyswietl":
-                    F_wyswietl();
+                    fWyswietl();
                     break;
                 case "dodaj":
-                    if(args.length<4) return;
-                    F_dodaj(args);
+                    if (args.length < 4) {
+                        break;
+                    }
+                    fDodaj(args);
                     break;
+                default:
+                    continue;
             }
         }
     }
 
-    private void F_dodaj(String[] args) {
-        if (faktura.equals(""))
+    private void fDodaj(final String[] args) {
+        if ("".equals(faktura)) {
             return;
-        list.get(klient).add(faktura,args[1],args[2],args[3]);
+        }
+        map.get(klient).add(faktura, args[1], args[2], args[3]);
     }
 
-    private void F_wyswietl() {
-        if (faktura.equals(""))
+    private void fWyswietl() {
+        if ("".equals(faktura)) {
             return;
-        list.get(klient).show(faktura);
+        }
+        map.get(klient).show(faktura);
     }
 
-    private void F_wybierz(String nazwa) {
-        if (klient.equals("")||nazwa.equals(""))
+    private void fWybierz(final String nazwa) {
+        if ("".equals(klient) || "".equals(nazwa)) {
             return;
-        if (list.get(klient).find(nazwa))
-            faktura=nazwa;
-        else
-            faktura="";
+        }
+        if (map.get(klient).find(nazwa)) {
+            faktura = nazwa;
+        } else {
+            faktura = "";
+        }
 
     }
 
-    private void F_nowa(String nazwa) {
-        if (klient.equals("")||nazwa.equals(""))
+    private void fNowa(final String nazwa) {
+        if ("".equals(klient) || "".equals(nazwa)) {
             return;
-        if(list.get(klient).create(nazwa))
-        {
-            faktura=nazwa;
+        }
+        if (map.get(klient).create(nazwa)) {
+            faktura = nazwa;
         }
     }
 
-    private void F_lista() {
-        if (klient.equals(""))
+    private void fLista() {
+        if ("".equals(klient)) {
             return;
-        list.get(klient).list();
+        }
+        map.get(klient).list();
     }
 
-    private void K_wybierz(String nazwa) {
-        if(list.get(nazwa)==null||nazwa.equals("")) {
+    private void kWybierz(final String nazwa) {
+        if (map.get(nazwa) == null || "".equals(nazwa)) {
             klient = "";
-            faktura = "";
-        }
-        else
-        {
+        } else {
             klient = nazwa;
-            faktura = "";
         }
+        faktura = "";
     }
 
-    private void K_nowy(String nazwa) {
-        if (list.get(nazwa)!=null||nazwa.equals(""))
+    private void kNowy(final String nazwa) {
+        if (map.get(nazwa) != null || "".equals(nazwa)) {
             return;
-        Klient k = new Klient(nazwa);
-        list.put(nazwa,k);
-        K_wybierz(nazwa);
+        }
+        final Klient nowyKlient = new Klient(nazwa);
+        map.put(nazwa, nowyKlient);
+        kWybierz(nazwa);
     }
 
-    private void K_lista() {
-        if(list.isEmpty())
-        {
+    private void kLista() {
+        if (map.isEmpty()) {
             System.out.println("Nie ma jeszcze klientów");
             return;
         }
-        for(Map.Entry<String,Klient> e: list.entrySet())
-        {
+        for (final Map.Entry<String, Klient> e: map.entrySet()) {
             System.out.println(e.getKey());
         }
     }
