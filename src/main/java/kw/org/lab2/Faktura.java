@@ -13,8 +13,9 @@ public class Faktura {
     private final String nazwa;
     /** Nazwa klienta. */
     private final String klient;
-
-    /**
+    /** Baza danych. */
+    private final DBHandler db = new DBHandler();
+     /**
      * Tworzy fakturę o danej nazwie.
      * @param nazwaFaktury nazwa faktury
      * @param nazwaKlienta nazwa klienta
@@ -33,6 +34,7 @@ public class Faktura {
     public void add(final String produkt, final int ilosc, final int cena) {
         final ElementFaktury elem = new ElementFaktury(produkt, ilosc, cena);
         list.add(elem);
+        db.addPozycja(klient, nazwa, produkt, ilosc, cena);
     }
 
     /**

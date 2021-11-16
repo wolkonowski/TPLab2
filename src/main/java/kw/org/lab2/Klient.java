@@ -13,7 +13,8 @@ public class Klient {
     private final Map<String, Faktura> map = new ConcurrentHashMap<>();
     /** Nazwa danego klienta.*/
     private final String nazwa;
-
+    /** Baza danych. */
+    private final DBHandler db = new DBHandler();
     /**
      * Dodaj do bazy danych daną fakturę.
      * @param nazwaFaktury nazwa
@@ -21,6 +22,7 @@ public class Klient {
      */
     private void add(final String nazwaFaktury, final Faktura faktura) {
         map.put(nazwaFaktury, faktura);
+        db.addFaktura(faktura);
     }
 
     /**

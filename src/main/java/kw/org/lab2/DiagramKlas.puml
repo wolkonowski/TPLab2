@@ -121,13 +121,11 @@ Input1179842735[
 <TR><TD ALIGN="LEFT" >-   klient: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   map: Map&lt;String, Klient&gt; [0..*]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >- add(nazwa: String, klientName: Klient)</TD></TR>
 <TR><TD ALIGN="LEFT" >- fDodaj(args: String[])</TD></TR>
 <TR><TD ALIGN="LEFT" >- fLista()</TD></TR>
 <TR><TD ALIGN="LEFT" >- fNowa(nazwa: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >- fWybierz(nazwa: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >- fWyswietl()</TD></TR>
-<TR><TD ALIGN="LEFT" >- get(nazwa: String): Klient</TD></TR>
 <TR><TD ALIGN="LEFT" >- help()</TD></TR>
 <TR><TD ALIGN="LEFT" >- kLista()</TD></TR>
 <TR><TD ALIGN="LEFT" >- kNowy(nazwa: String)</TD></TR>
@@ -147,11 +145,9 @@ Klient1179842735[
 <TR><TD ALIGN="LEFT" >-   map: Map&lt;String, Faktura&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   nazwa: String [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >- add(nazwaFaktury: String, faktura: Faktura)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ add(faktura: String, produkt: String, ilosc: String, cena: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ create(faktura: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ find(faktura: String): boolean</TD></TR>
-<TR><TD ALIGN="LEFT" >- get(nazwaFaktury: String): Faktura</TD></TR>
 <TR><TD ALIGN="LEFT" >+ list()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ show(faktura: String)</TD></TR>
 </TABLE>>

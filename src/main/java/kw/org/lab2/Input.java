@@ -15,6 +15,8 @@ public class Input {
     private String klient = "";
     /** Nazwa obecnie wybranej faktury. */
     private String faktura = "";
+    /** Baza danych. */
+    private final DBHandler db = new DBHandler();
     /**
      * Dodaj do bazy danych danego klienta.
      * @param nazwa nazwa
@@ -22,6 +24,7 @@ public class Input {
      */
     private void add(final String nazwa, final Klient klientName) {
         map.put(nazwa, klientName);
+        db.addKlient(klientName);
     }
 
     /**
