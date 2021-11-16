@@ -1,5 +1,6 @@
 package kw.org.lab2;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,7 +14,7 @@ public class Controller {
     /** Nazwa obecnie wybranej faktury. */
     public String faktura = "";
     /** Baza danych. */
-    public final DBHandler db = new DBHandler();
+    public final Database db = new DBHandler();
     /**
      * Dodaj do bazy danych danego klienta.
      * @param nazwa nazwa

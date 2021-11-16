@@ -60,15 +60,15 @@ config=StructureConfiguration;
   },
   "details": {
     "aggregation": "GroupByClass", // ByClass, GroupByClass, None
-    "showClassGenericTypes": false,
+    "showClassGenericTypes": true,
     "showMethods": true,
     "showMethodParameterNames": true,
     "showMethodParameterTypes": true,
     "showMethodReturnType": true,
-    "showPackageLevels": 0,
+    "showPackageLevels": 2,
     "showDetailedClassStructure": true
   },
-  "rootClass": "kw.org.lab2.Input"
+  "rootClass": "kw.org.lab2.Faktura"
 }
 diagram meta data end '/
 
@@ -80,6 +80,60 @@ digraph g {
     
 
 'nodes 
+subgraph cluster_110308 { 
+   	label=org
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   subgraph cluster_1269221647 { 
+   	label=lab2
+	labeljust=l
+	fillcolor="#d8d8d8"
+	style=filled
+   
+   Controller1179842735[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Controller</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+   db: Database [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   faktura: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   klient: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >+   map: Map&lt;String, Klient&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >- add(nazwa: String, klientName: Klient)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fDodaj(args: String[])</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fLista()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fNowa(nazwa: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fWybierz(nazwa: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fWyswietl()</TD></TR>
+<TR><TD ALIGN="LEFT" >- get(nazwa: String): Klient</TD></TR>
+<TR><TD ALIGN="LEFT" >+ kLista()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ kNowy(nazwa: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ kWybierz(nazwa: String)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+DBHandler1179842735[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Database</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addFaktura(faktura: Faktura)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addKlient(klient: Klient)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addPozycja(nazwaKlienta: String, nazwaFaktury: String, nazwaProduktu: String, ilosc: int, cena: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getFaktura(nazwaKlienta: String, nazwaFaktury: String): Faktura</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getKlient(nazwa: String): Klient</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
 ElementFaktury1179842735[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)ElementFaktury</TD></TR>
@@ -100,6 +154,7 @@ Faktura1179842735[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)Faktura</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   db: Database [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   klient: String [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   list: List&lt;ElementFaktury&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   nazwa: String [0..1]</TD></TR>
@@ -117,19 +172,9 @@ Input1179842735[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)Input</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >-   faktura: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   klient: String [0..1]</TD></TR>
-<TR><TD ALIGN="LEFT" >-   map: Map&lt;String, Klient&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   controller: Controller [0..1]</TD></TR>
 <HR/>
-<TR><TD ALIGN="LEFT" >- fDodaj(args: String[])</TD></TR>
-<TR><TD ALIGN="LEFT" >- fLista()</TD></TR>
-<TR><TD ALIGN="LEFT" >- fNowa(nazwa: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >- fWybierz(nazwa: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >- fWyswietl()</TD></TR>
 <TR><TD ALIGN="LEFT" >- help()</TD></TR>
-<TR><TD ALIGN="LEFT" >- kLista()</TD></TR>
-<TR><TD ALIGN="LEFT" >- kNowy(nazwa: String)</TD></TR>
-<TR><TD ALIGN="LEFT" >- kWybierz(nazwa: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ start()</TD></TR>
 </TABLE>>
 	style=filled
@@ -142,12 +187,15 @@ Klient1179842735[
 	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
 <TR><TD ALIGN="LEFT" >(C)Klient</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >-   db: Database [0..1]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   map: Map&lt;String, Faktura&gt; [0..*]</TD></TR>
 <TR><TD ALIGN="LEFT" >-   nazwa: String [0..1]</TD></TR>
 <HR/>
+<TR><TD ALIGN="LEFT" >- add(nazwaFaktury: String, faktura: Faktura)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ add(faktura: String, produkt: String, ilosc: String, cena: String)</TD></TR>
 <TR><TD ALIGN="LEFT" >+ create(faktura: String): boolean</TD></TR>
 <TR><TD ALIGN="LEFT" >+ find(faktura: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >- get(nazwaFaktury: String): Faktura</TD></TR>
 <TR><TD ALIGN="LEFT" >+ list()</TD></TR>
 <TR><TD ALIGN="LEFT" >+ show(faktura: String)</TD></TR>
 </TABLE>>
@@ -156,14 +204,21 @@ Klient1179842735[
 	shape=plaintext
 	fillcolor="#FFFFFF"
 ];
+} 
+} 
 
 'edges    
+Controller1179842735 -> Klient1179842735[label="map
+[0..*]"];
+Faktura1179842735 -> DBHandler1179842735[label="db
+[0..1]"];
 Faktura1179842735 -> ElementFaktury1179842735[label="list
 [0..*]"];
-Input1179842735 -> Klient1179842735[label="map
-[0..*]"];
+Input1179842735 -> Controller1179842735[label="controller
+[0..1]"];
 Klient1179842735 -> Faktura1179842735[label="map
 [0..*]"];
-    
+Klient1179842735 -> DBHandler1179842735[label="db
+[0..1]"];
 }
 @enduml

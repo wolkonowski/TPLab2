@@ -16,7 +16,7 @@ public class Faktura {
     /** Nazwa klienta. */
     private final String klient;
     /** Baza danych. */
-    private final DBHandler db = new DBHandler();
+    private final Database db = new DBHandler();
      /**
      * Tworzy fakturę o danej nazwie.
      * @param nazwaFaktury nazwa faktury

@@ -1,5 +1,6 @@
 package kw.org.lab2;
 
+import javax.xml.crypto.Data;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,7 +16,7 @@ public class Klient {
     /** Nazwa danego klienta.*/
     private final String nazwa;
     /** Baza danych. */
-    private final DBHandler db = new DBHandler();
+    private final Database db = new DBHandler();
     /**
      * Dodaj do bazy danych daną fakturę.
      * @param nazwaFaktury nazwa

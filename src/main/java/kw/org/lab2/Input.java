@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Wszystkie polecenia przesyłamy do klienta, zgodne z Law of Demeter.
  */
 public class Input {
-    Controller controller = new Controller();
+    private Controller controller = new Controller();
 
     /**
      * Wyświetl dostępne komendy.
