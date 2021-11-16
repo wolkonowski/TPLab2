@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Klasa reprezentująca klienta.
+ * Klient tworzy i zawiera w sobie listę faktur, zgodne z Creator.
  */
 public class Klient {
     /** Mapa zawierająca wszystkie faktury danego klienta.

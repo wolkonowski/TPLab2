@@ -1,7 +1,7 @@
 package kw.org.lab2;
 
 /**
- * Interfejs opisujący funkcjonalności bazy danych
+ * Interfejs opisujący funkcjonalności bazy danych.
  */
 public interface Database {
     /**
@@ -32,12 +32,16 @@ public interface Database {
     Faktura getFaktura(String nazwaKlienta, String nazwaFaktury);
 
     /**
-     * Dodaj pozycję do faktury
+     * Dodaj pozycję do faktury.
      * @param nazwaKlienta nazwa klienta
      * @param nazwaFaktury nazwa faktury
      * @param nazwaProduktu nazwa produktu
      * @param ilosc ilosc produktów
      * @param cena cena za produkt
      */
-    void addPozycja(String nazwaKlienta, String nazwaFaktury, String nazwaProduktu, int ilosc, int cena);
+    void addPozycja(String nazwaKlienta,
+                    String nazwaFaktury,
+                    String nazwaProduktu,
+                    int ilosc,
+                    int cena);
 }

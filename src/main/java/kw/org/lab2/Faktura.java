@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * Klasa reprezentująca daną fakturę.
+ * Tworzy element faktury, zgodne z Creator.
+ * Oblicza swój koszt, zgodne z Expert.
  */
 public class Faktura {
     /** Lista wszystkich pozycji na fakturze. */

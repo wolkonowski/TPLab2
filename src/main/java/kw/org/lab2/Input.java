@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Klasa odpowiedzialna za interfejs użytkownika.
+ * Wszystkie polecenia przesyłamy do klienta, zgodne z Law of Demeter.
  */
 public class Input {
     /** Mapa zawierająca wszystkich klientów. */

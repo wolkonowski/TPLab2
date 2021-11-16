@@ -1,6 +1,14 @@
 package kw.org.lab2;
 
-public class DBHandler implements Database{
+import org.junit.runner.RunWith;
+//import static org.mockito.Mockito.*;
+
+//@RunWith(MockitoJUnitRunner.class)
+/**
+ * Implementacja bazy danych.
+ * Możemy testować jej zachowania używając
+ */
+public class DBHandler implements Database {
 
     /**
      * Dodaj klienta do bazy.
@@ -8,7 +16,7 @@ public class DBHandler implements Database{
      * @param klient klient
      */
     @Override
-    public void addKlient(Klient klient) {
+    public void addKlient(final Klient klient) {
 
     }
 
@@ -18,7 +26,7 @@ public class DBHandler implements Database{
      * @param faktura faktura
      */
     @Override
-    public void addFaktura(Faktura faktura) {
+    public void addFaktura(final Faktura faktura) {
 
     }
 
@@ -29,7 +37,7 @@ public class DBHandler implements Database{
      * @return klient o danej nazwie
      */
     @Override
-    public Klient getKlient(String nazwa) {
+    public Klient getKlient(final String nazwa) {
         return null;
     }
 
@@ -41,12 +49,13 @@ public class DBHandler implements Database{
      * @return faktura o danej nazwie
      */
     @Override
-    public Faktura getFaktura(String nazwaKlienta, String nazwaFaktury) {
+    public Faktura getFaktura(final String nazwaKlienta,
+                              final String nazwaFaktury) {
         return null;
     }
 
     /**
-     * Dodaj pozycję do faktury
+     * Dodaj pozycję do faktury.
      *
      * @param nazwaKlienta  nazwa klienta
      * @param nazwaFaktury  nazwa faktury
@@ -55,7 +64,11 @@ public class DBHandler implements Database{
      * @param cena          cena za produkt
      */
     @Override
-    public void addPozycja(String nazwaKlienta, String nazwaFaktury, String nazwaProduktu, int ilosc, int cena) {
+    public void addPozycja(final String nazwaKlienta,
+                           final String nazwaFaktury,
+                           final String nazwaProduktu,
+                           final int ilosc,
+                           final int cena) {
 
     }
 }

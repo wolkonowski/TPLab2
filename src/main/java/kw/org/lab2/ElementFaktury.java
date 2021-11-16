@@ -2,6 +2,7 @@ package kw.org.lab2;
 
 /**
  * Klasa reprezentująca pozycję na fakturze.
+ * Element sam oblicza swój łączny koszt, zgodne z Expert.
  */
 public class ElementFaktury {
     /** Nazwa produktu. */
@@ -40,6 +41,6 @@ public class ElementFaktury {
     public String getElement() {
         return nazwa + "\t"
                 + ilosc + "szt. * " + (double) cena / 100
-                + "zl\tRAZEM " + total() + "zł";
+                + "zł\tRAZEM " + total() + "zł";
     }
 }
