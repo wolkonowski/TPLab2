@@ -10,52 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Wszystkie polecenia przesyłamy do klienta, zgodne z Law of Demeter.
  */
 public class Input {
-    /** Mapa zawierająca wszystkich klientów. */
-    private final Map<String, Klient> map = new ConcurrentHashMap<>();
-    /** Nazwa obecnie wybranego klienta. */
-    private String klient = "";
-    /** Nazwa obecnie wybranej faktury. */
-    private String faktura = "";
-    /** Baza danych. */
-    private final DBHandler db = new DBHandler();
-    /**
-     * Dodaj do bazy danych danego klienta.
-     * @param nazwa nazwa
-     * @param klientName faktura
-     */
-    private void add(final String nazwa, final Klient klientName) {
-        map.put(nazwa, klientName);
-        db.addKlient(klientName);
-    }
-
-    /**
-     * Odczytaj z bazy klienta o danej nazwie.
-     * @param nazwa nazwa
-     * @return klient o danej nazwie
-     */
-    private Klient get(final String nazwa) {
-        return map.get(nazwa);
-    }
-
-    /**
-     * Czy w bazie są klienci?
-     * @return Czy w bazie są klienci?
-     *
-     */
-    private boolean isEmpty() {
-        return map.isEmpty();
-    }
-
-    /**
-     * Uzyskaj wszystkich klientów.
-     * @return wszyscy klienci
-     */
-    private Set<Map.Entry<String, Klient>> getAll() {
-        return map.entrySet();
-    }
-
-
-
+    Controller controller = new Controller();
 
     /**
      * Wyświetl dostępne komendy.
@@ -83,11 +38,11 @@ public class Input {
         help();
         while (true) {
             String command = "Podaj komendę";
-            if (!("".equals(klient))) {
-                command += "<" + klient + ">";
+            if (!("".equals(controller.klient))) {
+                command += "<" + controller.klient + ">";
             }
-            if (!("".equals(faktura))) {
-                command += "<" + faktura + ">";
+            if (!("".equals(controller.faktura))) {
+                command += "<" + controller.faktura + ">";
             }
             System.out.println(command);
             final String line = scanner.nextLine();
@@ -100,117 +55,47 @@ public class Input {
                     help();
                     break;
                 case "klienci":
-                    kLista();
+                    controller.kLista();
                     break;
                 case "nowyKlient":
                     if (args.length < 2) {
                         break;
                     }
-                    kNowy(args[1]);
+                    controller.kNowy(args[1]);
                     break;
                 case "klient":
                     if (args.length < 2) {
                         break;
                     }
-                    kWybierz(args[1]);
+                    controller.kWybierz(args[1]);
                     break;
                 case "faktury":
-                    fLista();
+                    controller.fLista();
                     break;
                 case "nowaFaktura":
                     if (args.length < 2) {
                         break;
                     }
-                    fNowa(args[1]);
+                    controller.fNowa(args[1]);
                     break;
                 case "faktura":
                     if (args.length < 2) {
                         break;
                     }
-                    fWybierz(args[1]);
+                    controller.fWybierz(args[1]);
                     break;
                 case "wyswietl":
-                    fWyswietl();
+                    controller.fWyswietl();
                     break;
                 case "dodaj":
                     if (args.length < 4) {
                         break;
                     }
-                    fDodaj(args);
+                    controller.fDodaj(args);
                     break;
                 default:
                     continue;
             }
-        }
-    }
-
-    private void fDodaj(final String[] args) {
-        if ("".equals(faktura)) {
-            return;
-        }
-        get(klient).add(faktura, args[1], args[2], args[3]);
-    }
-
-    private void fWyswietl() {
-        if ("".equals(faktura)) {
-            return;
-        }
-        get(klient).show(faktura);
-    }
-
-    private void fWybierz(final String nazwa) {
-        if ("".equals(klient) || "".equals(nazwa)) {
-            return;
-        }
-        if (get(klient).find(nazwa)) {
-            faktura = nazwa;
-        } else {
-            faktura = "";
-        }
-
-    }
-
-    private void fNowa(final String nazwa) {
-        if ("".equals(klient) || "".equals(nazwa)) {
-            return;
-        }
-        if (get(klient).create(nazwa)) {
-            faktura = nazwa;
-        }
-    }
-
-    private void fLista() {
-        if ("".equals(klient)) {
-            return;
-        }
-        get(klient).list();
-    }
-
-    private void kWybierz(final String nazwa) {
-        if (get(nazwa) == null || "".equals(nazwa)) {
-            klient = "";
-        } else {
-            klient = nazwa;
-        }
-        faktura = "";
-    }
-
-    private void kNowy(final String nazwa) {
-        if (get(nazwa) != null || "".equals(nazwa)) {
-            return;
-        }
-        final Klient nowyKlient = new Klient(nazwa);
-        add(nazwa, nowyKlient);
-        kWybierz(nazwa);
-    }
-
-    private void kLista() {
-        if (isEmpty()) {
-            System.out.println("Nie ma jeszcze klientów");
-            return;
-        }
-        for (final Map.Entry<String, Klient> e: getAll()) {
-            System.out.println(e.getKey());
         }
     }
 }
